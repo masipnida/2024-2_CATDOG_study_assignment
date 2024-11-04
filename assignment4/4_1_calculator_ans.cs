@@ -50,12 +50,72 @@ namespace calculator
     public class Calculator
     {
         // ---------- TODO ----------
-        
+        public double Calculate(double num1, string op, double num2)
+        {
+            double ans;
+            switch (op)
+            {
+                case "+": 
+                    ans = num1 + num2;
+                    break;
+                case "-":
+                    ans = num1 - num2;
+                    break;
+                case "*":
+                    ans = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 == 0)
+                    {
+                        throw new DivideByZeroException("Division by zero is not allowed");
+                    }
+                    else
+                    {
+                        ans = num1 / num2;
+                        break;
+                    }
+                case "%":
+                    int a = (int) num1;
+                    int b = (int) num2;
+                    ans = a % b;
+                    break;
+                case "**":
+                    int k = (int) num2;
+                    ans = Math.Pow(num1, k);
+                    break;
+                case "G":
+                    ans = Calculate_Max(num1, num2);
+                    break;
+                case "L":
+                    int p = (int) num1;
+                    int q = (int) num2;
+                    ans = ( p * q )/ Calculate_Max(num1, num2);
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid operator");
+            }
+
+            return ans;
+        }
+
+        public int Calculate_Max(double num1, double num2)
+        {
+            int c;
+            int a = (int) num1;
+            int b = (int) num2;
+
+            while (b != 0)
+            {
+                c = a % b;
+                a = b;
+                b = c;
+            }
+
+            return a;
+        }
         // --------------------
     }
 }
-
-/* hi */
 
 /* example output
 
