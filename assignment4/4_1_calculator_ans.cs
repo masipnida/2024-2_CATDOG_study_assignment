@@ -55,6 +55,8 @@ namespace calculator
     }
 }
 
+/* hi */
+
 /* example output
 
 Enter an expression (ex. 2 + 3):
