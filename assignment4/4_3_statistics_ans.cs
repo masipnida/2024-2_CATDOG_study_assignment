@@ -23,6 +23,39 @@ namespace statistics
             
             // --------------------
         }
+
+        public int Average(string[,] data, int count, int pick)
+        {
+            int sum = 0;
+            for (int i = 1; i <= count; i++)
+            {
+                sum += double.Parse(data[i, pick]);
+            }
+            return sum / count;
+        }
+
+        public int[] MaxMin(string[,] data, int count)
+        {
+            int arr = new int[2];
+            arr[0] = double.Parse(data[1, 2]);
+            arr[1] = double.Parse(data[1, 2]);
+            for (int i = 1; i <= count; i++)
+            {
+                for (int j = 2; j <= 4; j++)
+                {
+                    if (double.Parse(data[i, j]) > arr[0])
+                    {
+                        arr[0] = double.Parse(data[i, j]);
+                    }
+                    
+                    if (double.Parse(data[i, j]) < arr[1])
+                    {
+                        arr[1] = double.Parse(data[i, j]);
+                    }
+                }
+            }
+            return arr;
+        }
     }
 }
 
