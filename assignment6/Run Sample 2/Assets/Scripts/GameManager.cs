@@ -23,20 +23,27 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveCharacter();
+        if(Character != null)
+        {
+            MoveCharacter();
+        }
     }
 
     // For smooth cam moving, it's good to use LateUpdate.
     void LateUpdate()
     {
-        MoveCam();
+        if(Character != null)
+        {
+            MoveCam();
+        }
     }
 
     void MoveCam()
     {
         // CamObj는 Character의 x, y position을 따라간다.
-        // ---------- TODO ---------- 
-        CamObj.transform.position = Character.transform.position;
+        // ---------- TODO ----------
+        Vector3 char_pos = Character.transform.position;
+        CamObj.transform.position = new Vector3(char_pos.x, char_pos.y, -10f);
         // -------------------- 
     }
 
@@ -44,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         // Character는 초당 CharacterSpeed의 속도로 우측으로 움직인다.
         // ---------- TODO ---------- 
-        Character.transform.position += new Vector3(CharacterSpeed, 0, 0);
+        Character.transform.position += new Vector3(CharacterSpeed * Time.deltaTime, 0, 0);
         // -------------------- 
     }
 
@@ -52,8 +59,13 @@ public class GameManager : MonoBehaviour
     {
         // Character를 삭제하고, "Game Over!"라는 메시지를 3초간 띄우고, RestartButton을 활성화한다.
         // ---------- TODO ---------- 
-        Destroy(Character);
+        if(Character != null)
+        {
+            Destroy(Character);
+            Character = null;
+        }
         MyUIManager.DisplayMessage("Game Over!", 3f);
+        MyUIManager.RestartButton.SetActive(true);
         // -------------------- 
     }
 
