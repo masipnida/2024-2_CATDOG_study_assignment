@@ -20,41 +20,37 @@ namespace statistics
 
             int stdCount = data.GetLength(0) - 1;
             // ---------- TODO ----------
-            
-            // --------------------
-        }
+            double math_ave = Average(data, stdCount, 2);
+            double sci_ave = Average(data, stdCount, 3);
+            double eng_ave = Average(data, stdCount, 4);
+            Console.WriteLine("Average Scores:\nMath: {0}\nScience: {1}\nEnglish: {2}", math_ave, sci_ave, eng_ave);
 
-        public int Average(string[,] data, int count, int pick)
-        {
-            int sum = 0;
-            for (int i = 1; i <= count; i++)
-            {
-                sum += double.Parse(data[i, pick]);
-            }
-            return sum / count;
-        }
+            double[] math_mm = MaxMin(data, 2);
+            double[] sci_mm = MaxMin(data, 3);
+            double[] eng_mm = MaxMin(data, 4);
+            Console.WriteLine("Max and min Scores\nMath: ({0}, {1})\nScience: ({2}, {3})\nEnglish: ({4}, {5})", math_mm[0], math_mm[1], sci_mm[0], sci_mm[1], eng_mm[0], eng_mm[1]);
 
-        public int[] MaxMin(string[,] data, int count)
-        {
-            int arr = new int[2];
-            arr[0] = double.Parse(data[1, 2]);
-            arr[1] = double.Parse(data[1, 2]);
-            for (int i = 1; i <= count; i++)
+            string[] rank_s = Rank(data, stdCount);
+            Console.WriteLine("Students rank by total scores:\n");
+            for (int i = 0; i < stdCount; i++)
             {
-                for (int j = 2; j <= 4; j++)
+                Console.WriteLine($"{rank_s[i + 1]}: {i}");
+                switch (i)
                 {
-                    if (double.Parse(data[i, j]) > arr[0])
-                    {
-                        arr[0] = double.Parse(data[i, j]);
-                    }
-                    
-                    if (double.Parse(data[i, j]) < arr[1])
-                    {
-                        arr[1] = double.Parse(data[i, j]);
-                    }
+                    case 1:
+                        Console.WriteLine("st\n");
+                        break;
+                    case 2:
+                        Console.WriteLine("nd\n");
+                        break;
+                    case 3:
+                        Console.WriteLine("rd\n");
+                        break;
+                    default:
+                        Console.WriteLine("th\n");
                 }
             }
-            return arr;
+            // --------------------
         }
     }
 }
