@@ -20,10 +20,20 @@ namespace statistics
 
             int stdCount = data.GetLength(0) - 1;
             // ---------- TODO ----------
-            double math_ave = Average(data, stdCount, 2);
-            double sci_ave = Average(data, stdCount, 3);
-            double eng_ave = Average(data, stdCount, 4);
-            Console.WriteLine("Average Scores:\nMath: {0}\nScience: {1}\nEnglish: {2}", math_ave, sci_ave, eng_ave);
+            double math_ave;
+            double sci_ave;
+            double eng_ave;
+
+            for(int i = 1; i <= stdCount; i++)
+            {
+                math_ave += data[i, 2];
+                sci_ave += data[i, 3];
+                eng_ave += data[i, 4];
+            }
+            math_ave = math_ave / stdCount;
+            sci_ave = sci_ave / stdCount;
+            eng_ave = eng_ave / stdCount;
+            Console.WriteLine($"Average Scores:\nMath: {math_ave}\nScience: {sci_ave}\nEnglish: {eng_ave}");
 
             double[] math_mm = MaxMin(data, 2);
             double[] sci_mm = MaxMin(data, 3);
