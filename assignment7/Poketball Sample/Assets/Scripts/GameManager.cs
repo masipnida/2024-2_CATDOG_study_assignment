@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -27,6 +29,8 @@ public class GameManager : MonoBehaviour
         // PlayerBall, CamObj, MyUIManager를 얻어온다.
         // ---------- TODO ---------- 
         PlayerBall = GameObject.Find("PlayerBall");
+        CamObj = GameObject.Find("Main Camera");
+        MyUIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         // -------------------- 
     }
 
@@ -40,7 +44,16 @@ public class GameManager : MonoBehaviour
     {
         // 좌클릭시 raycast하여 클릭 위치로 ShootBallTo 한다.
         // ---------- TODO ---------- 
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit, 100f))
+            {
+                ShootBallTo(hit.point);
+            }
+        }
         // -------------------- 
     }
 
@@ -56,15 +69,31 @@ public class GameManager : MonoBehaviour
         // 각 공은 RowSpacing만큼의 간격을 가진다.
         // 각 공의 이름은 {index}이며, 아래 함수로 index에 맞는 Material을 적용시킨다.
         // Obj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/ball_1");
-        // ---------- TODO ---------- 
-        
+        // ---------- TODO ----------
+        int index = 1;
+        Vector3 vari = new Vector3((2f * BallRadius + RowSpacing) / 2f, 0, 0);
+        Vector3 vari_2 = new Vector3(0, 0, (2f * BallRadius + RowSpacing) * Mathf.Sin(Mathf.PI / 3f));
+        for(int i=0; i < 5; i++)
+        {
+            for (int j = 0; j < i+1; j++)
+            {
+                GameObject ball = Instantiate(BallPrefab, StartPosition - (vari * i) + (2f * j * vari), StartRotation);
+                ball.name = index.ToString();
+                ball.GetComponent<MeshRenderer>().material = Resources.Load<Material>($"Materials/ball_{index}");
+                
+                index++;
+            }
+            StartPosition -= vari_2;
+        }
+            
         // -------------------- 
     }
     void CamMove()
     {
         // CamObj는 PlayerBall을 CamSpeed의 속도로 따라간다.
         // ---------- TODO ---------- 
-        
+        Vector3 tarPos = new Vector3(PlayerBall.transform.position.x + 0.0f, PlayerBall.transform.position.y + 15.0f, PlayerBall.transform.position.z + 0.0f);
+        CamObj.transform.position = Vector3.Lerp(CamObj.transform.position, tarPos, Time.deltaTime * CamSpeed);
         // -------------------- 
     }
 
