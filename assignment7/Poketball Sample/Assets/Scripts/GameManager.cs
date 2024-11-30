@@ -108,6 +108,16 @@ public class GameManager : MonoBehaviour
         // 힘은 CalcPower 함수로 계산하고, y축 방향 힘은 0으로 한다.
         // ForceMode.Impulse를 사용한다.
         // ---------- TODO ---------- 
+        float power;
+        Vector3 direction = targetPos - PlayerBall.transform.position;
+        direction.y = 0;
+
+        Vector3 normalizedDirection = direction.normalized;
+        power = CalcPower(direction);
+
+        Vector3 mforce = normalizedDirection * power;
+
+        Rigidbody.AddForce(mforce, ForceMode.Impulse);
         
         // -------------------- 
     }
@@ -117,7 +127,7 @@ public class GameManager : MonoBehaviour
     {
         // "{ballName} falls"을 1초간 띄운다.
         // ---------- TODO ---------- 
-        
+        MyUIManager.DisplayText($"{ballName} falls", 1);
         // -------------------- 
     }
 }
