@@ -110,6 +110,9 @@ public class GameManager : MonoBehaviour
         // ---------- TODO ---------- 
         float power;
         Vector3 direction = targetPos - PlayerBall.transform.position;
+        Rigidbody rb = PlayerBall.GetComponent<Rigidbody>();
+        if (rb == null) return;
+
         direction.y = 0;
 
         Vector3 normalizedDirection = direction.normalized;
@@ -117,7 +120,7 @@ public class GameManager : MonoBehaviour
 
         Vector3 mforce = normalizedDirection * power;
 
-        Rigidbody.AddForce(mforce, ForceMode.Impulse);
+        rb.AddForce(mforce, ForceMode.Impulse);
         
         // -------------------- 
     }
